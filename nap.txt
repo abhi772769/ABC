@@ -1,0 +1,24 @@
+def nap(W, wt, p, n):
+    # Create a DP array to store the maximum profit for each weight from 0 to W
+    # dp[i] will store the maximum profit for a knapsack capacity i
+    dp = [0] * (W + 1)
+
+    # Outer loop: Iterate over each item (from i = 0 to n-1)
+    for i in range(n):
+        # Inner loop: Iterate backwards through all possible weights from W to wt[i]
+        # We iterate backwards to prevent overwriting the dp values that we still need to use.
+        for w in range(W, wt[i] - 1, -1):
+            # Update dp[w] by considering whether including the current item i results in a higher profit
+            dp[w] = max(dp[w], dp[w - wt[i]] + p[i])
+
+    # The value at dp[W] will be the maximum profit we can get with a knapsack of capacity W
+    print(dp[W])
+
+# Example usage:
+p = [6, 10, 12]   # Profits for the items
+wt = [1, 2, 3]    # Weights of the items
+W = 5             # Maximum weight capacity of the knapsack
+n = len(p)        # Number of items
+
+# Call the nap function to calculate and print the maximum profit
+nap(W, wt, p, n)
